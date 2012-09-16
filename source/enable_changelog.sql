@@ -22,9 +22,9 @@ BEGIN
   IF (l_rule_column IS NOT NULL) THEN
   BEGIN
   
-  SET l_changelog := CONCAT(p_mview_name, '_changelog');
+    SET l_changelog         := CONCAT(p_mview_name, '_changelog');
     SET @l_changelog_script := CONCAT('CREATE TABLE IF NOT EXISTS ', p_schema_name, '.', l_changelog,
-      '( ', l_rule_column, ' INT NOT NULL, PRIMARY KEY (', l_rule_column, ') )');
+      '( ', l_rule_column, ' INTEGER NOT NULL, PRIMARY KEY (', l_rule_column, ') )');
     INSERT INTO changelog (mview_id, table_name, table_schema, log_column, changelog, mview_schema)
     VALUES (l_mview_id, p_table_name, p_schema_name, IFNULL(p_log_column, l_rule_column), l_changelog, p_schema_name);
     PREPARE create_changelog FROM @l_changelog_script;
